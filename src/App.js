@@ -9,8 +9,8 @@ import { GlobalStyle } from './GlobalStyles';
 const App = () => {
   return (
     <>
-      <GlobalStyle />
       <Header />
+      <GlobalStyle />
     </>
   );
 };
