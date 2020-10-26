@@ -13,3 +13,12 @@ export const convertMoney = (money) => {
   });
   return formatter.format(money);
 };
+
+export const isPersistedState = (stateName) => {
+  // you can only write in local ans session storage in string so you have to parse out
+  const sessionState = sessionStorage.getItem(stateName);
+  return sessionState && JSON.parse(sessionState);
+};
+
+
+

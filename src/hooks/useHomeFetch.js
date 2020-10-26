@@ -1,6 +1,7 @@
 // custom hook always start with use imp...
 import { useState, useEffect, useRef } from 'react';
 import API from '../API';
+import { isPersistedState } from '../helpers';
 
 ///    Aways give initial state
 const initialState = {
@@ -41,17 +42,31 @@ export const useHomeFetch = () => {
   ///Initial render and search
 
   useEffect(() => {
+    if (!searchTerm) {
+      const sessionState = isPersistedState('homeState');
+      if (sessionState) {
+        console.log('Grabbing from sessionStorage');
+        setState(sessionState);
+        return;
+      }
+    }
+    console.log('Grabbing from API');
+
     setState(initialState);
     fetchMovies(1, searchTerm);
   }, [searchTerm]); /// [] run once
 
   ///// Load More
-
   useEffect(() => {
     if (!isLoadingMore) return;
     fetchMovies(state.page + 1, searchTerm);
-    setIsLoadingMore(false);  
+    setIsLoadingMore(false);
   }, [isLoadingMore, searchTerm, state.page]);
+
+  /// write to session storage
+  useEffect(() => {
+    if (!searchTerm) sessionStorage.setItem('homeState', JSON.stringify(state));
+  }, [searchTerm, state]);
 
   return {
     state: state,

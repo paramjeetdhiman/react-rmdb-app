@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-
+import { isPersistedState } from '../helpers';
 import API from '../API';
 
 export const useMovieFetch = (movieId) => {
@@ -20,7 +20,6 @@ export const useMovieFetch = (movieId) => {
           (member) => member.job === 'Director'
         );
 
-        console.log(credits);
         setState({
           ...movie,
           actors: credits.cast,
@@ -33,8 +32,21 @@ export const useMovieFetch = (movieId) => {
       }
     };
 
+    const sessionState = isPersistedState(movieId);
+    if (sessionState) {
+      setState(sessionState);
+      setLoading(false);
+      return;
+    }
+
     fetchMovie();
   }, [movieId]);
+
+  /// write to session storage
+
+  useEffect(() => {
+    sessionStorage.setItem(movieId, JSON.stringify(state));
+  }, [movieId, state]);
 
   return {
     state,
