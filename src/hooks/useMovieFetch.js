@@ -20,9 +20,10 @@ export const useMovieFetch = (movieId) => {
           (member) => member.job === 'Director'
         );
 
+        console.log(credits);
         setState({
           ...movie,
-          actors: credits.casts,
+          actors: credits.cast,
           directors,
         });
 
