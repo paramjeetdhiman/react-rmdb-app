@@ -1,6 +1,6 @@
 ## REACT RMDB APP
 
-#### Link : [https://react-rmdb-app.netlify.app/](https://react-rmdb-app.netlify.app/)
+#### Link : [React-Rmdb](https://react-rmdb-app.netlify.app/)
 
 [<img src="./public/img1.png" />]()
 
